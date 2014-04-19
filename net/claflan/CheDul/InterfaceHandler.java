@@ -30,10 +30,13 @@ public final class InterfaceHandler {
                 mW.setVisible(true);
                 break;
             case "NEW_SCHEDULE":
+                nSD.reset();
                 nSD.setVisible(true);
                 break;
             case "ADD_EVENT":
+                aED.reset();
                 aED.setVisible(true);
+                break;
         }
     }
 }

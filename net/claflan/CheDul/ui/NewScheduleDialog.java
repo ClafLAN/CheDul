@@ -12,6 +12,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import net.claflan.CheDul.logic.Schedule;
 
 public class NewScheduleDialog extends JDialog implements ActionListener {
         
@@ -74,6 +75,16 @@ public class NewScheduleDialog extends JDialog implements ActionListener {
         setModalityType(ModalityType.APPLICATION_MODAL);
         pack();
         setLocationRelativeTo(parent);
+    }
+    
+    public Schedule getSchedule() {
+        return new Schedule(chosenFile);
+    }
+    
+    public void reset() {
+        chosenFile = null;
+        fileField.setText("");
+        nameField.setText("");
     }
     
     @Override

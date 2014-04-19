@@ -122,11 +122,9 @@ public class AddEventDialog extends JDialog implements ActionListener, ItemListe
         
         for (int minute = 1; minute <= 59; minute++)
             minuteBox.addItem(minute);
-        
-        setComboBoxes(Calendar.getInstance());
     }
     
-    private void setComboBoxes(Calendar calendar) {
+    public void setComboBoxes(Calendar calendar) {
         
         monthBox.setSelectedIndex(calendar.get(Calendar.MONTH));
         int hour = calendar.get(Calendar.HOUR) - 1;
@@ -161,6 +159,11 @@ public class AddEventDialog extends JDialog implements ActionListener, ItemListe
                 getRepresentativeCalendar().getTime());
     }
     
+    public void reset() {
+        nameField.setText("");
+        setComboBoxes(Calendar.getInstance());
+    }
+    
     @Override
     public void itemStateChanged(ItemEvent e) {
         if (e.getSource() == timeCheckBox) {
@@ -184,15 +187,5 @@ public class AddEventDialog extends JDialog implements ActionListener, ItemListe
         }
         
         setComboBoxes(getRepresentativeCalendar());
-    }
-    
-    public static void main(String[] args) {
-        JFrame temp = new JFrame("Temp");
-        temp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        temp.setSize(500, 500);
-        temp.setLocationRelativeTo(null);
-        temp.setVisible(true);
-        AddEventDialog aed = new AddEventDialog(temp);
-        aed.setVisible(true);
     }
 }

@@ -4,15 +4,19 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import net.claflan.CheDul.EventHandler;
 
 public class MainWindow extends JFrame {
 
+    private final EventHandler eH;
+    
     private JMenuBar menuBar;    
     private JMenu fileMenu, optionsMenu, helpMenu;
     private JMenuItem file_newSchedule, file_openSchedule, file_exit;
     
-    public MainWindow() {
+    public MainWindow(EventHandler eH) {
         super("CheDul");
+        this.eH = eH;
         init();
     }
     
@@ -26,6 +30,8 @@ public class MainWindow extends JFrame {
         fileMenu = new JMenu("File");
         
         file_newSchedule = new JMenuItem("New Schedule");
+        file_newSchedule.setActionCommand("SHOW NEW_SCHEDULE");
+        file_newSchedule.addActionListener(eH);
         fileMenu.add(file_newSchedule);
         file_openSchedule = new JMenuItem("Open Schedule");
         fileMenu.add(file_openSchedule);

@@ -1,11 +1,10 @@
-package net.claflan.CheDul.io;
+package net.claflan.CheDul.logic;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.UUID;
 import java.util.zip.ZipFile;
-import net.claflan.CheDul.logic.Event;
 
 public class Schedule extends ZipFile {
 

@@ -1,11 +1,19 @@
 package net.claflan.CheDul.ui.views;
 
 import java.util.Calendar;
+import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableCellRenderer;
+import net.claflan.CheDul.logic.Schedule;
 
 public abstract class View extends AbstractTableModel {
 
-    private Calendar targetedDate;
+    protected boolean horizontalHeader;
+    protected TableCellRenderer headerRenderer;
+    protected TableCellRenderer dataRenderer;
+    
+    protected Schedule currentSchedule;
+    protected Calendar targetedDate;
     private final int incrementType;
     private final int incrementValue;
     
@@ -18,13 +26,31 @@ public abstract class View extends AbstractTableModel {
         goToDate(calendar);
     }
     
-    public void previous() {
+    public void setSchedule(Schedule schedule) {
+        this.currentSchedule = schedule;
+    }
+    
+    public final void previous() {
         targetedDate.add(incrementType, -incrementValue);
     }
-    public void next() {
+    public final void next() {
         targetedDate.add(incrementType, incrementValue);
     }
-    public void goToDate(Calendar calendar){
+    public final void goToDate(Calendar calendar){
         targetedDate = calendar;
+    }
+    
+    public JTable getJTable() {
+        return new JTable(this) {
+            
+            @Override
+            public TableCellRenderer getCellRenderer(int row, int column) {
+                if (horizontalHeader) {
+                    return (row == 0) ? headerRenderer : dataRenderer;
+                } else {
+                    return (column == 0) ? headerRenderer : dataRenderer;
+                }
+            }
+        };
     }
 }

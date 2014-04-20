@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -35,6 +36,9 @@ public class Schedule implements Serializable {
     }
     public Event getEvent(UUID uuid) {
         return events.get(uuid);
+    }
+    public Collection<Event> getEvents() {
+        return events.values();
     }
     
     public static Schedule readSchedule(File fileOnDisk) {

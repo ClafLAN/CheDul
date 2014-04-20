@@ -26,6 +26,9 @@ import net.claflan.CheDul.logic.Event;
 
 public class AddEventDialog extends JDialog implements ActionListener, ItemListener {
 
+    private final MainWindow mW;
+    private boolean guard = false;
+    
     private JLabel instructionLabel, nameLabel, dateLabel, descriptionLabel;
     private JTextField nameField, yearField;
     private JTextArea descriptionArea;
@@ -37,12 +40,13 @@ public class AddEventDialog extends JDialog implements ActionListener, ItemListe
     
     private ButtonGroup ampmGroup;
     
-    public AddEventDialog(JFrame parent) {
-        super(parent, "Add a New Event");
-        init(parent);
+    public AddEventDialog(MainWindow mW) {
+        super(mW, "Add a New Event");
+        init(mW);
+        this.mW = mW;
     }
     
-    private void init(JFrame parent) {
+    private void init(MainWindow mW) {
         setLayout(new GridBagLayout());
         setResizable(false);
         
@@ -52,7 +56,7 @@ public class AddEventDialog extends JDialog implements ActionListener, ItemListe
         dateLabel = new JLabel("Date:");
         descriptionLabel = new JLabel("Description:");
         
-        nameField = new JTextField(20);
+        nameField = new JTextField(50);
         yearField = new JTextField(5);
         
         descriptionArea = new JTextArea(5, 1);
@@ -78,6 +82,8 @@ public class AddEventDialog extends JDialog implements ActionListener, ItemListe
         ampmGroup.add(pmButton);
         
         addButton = new JButton("Add");
+        addButton.setActionCommand("CREATE");
+        addButton.addActionListener(this);
         
         monthBox.addActionListener(this);
         yearField.addActionListener(this);
@@ -110,7 +116,7 @@ public class AddEventDialog extends JDialog implements ActionListener, ItemListe
         
         setModalityType(ModalityType.APPLICATION_MODAL);
         pack();
-        setLocationRelativeTo(parent);
+        setLocationRelativeTo(mW);
     }
     
     private void fillComboBoxes() {
@@ -125,6 +131,7 @@ public class AddEventDialog extends JDialog implements ActionListener, ItemListe
     }
     
     public void setComboBoxes(Calendar calendar) {
+        guard = true;
         
         monthBox.setSelectedIndex(calendar.get(Calendar.MONTH));
         int hour = calendar.get(Calendar.HOUR) - 1;
@@ -141,6 +148,8 @@ public class AddEventDialog extends JDialog implements ActionListener, ItemListe
             amButton.setSelected(true);
         else
             pmButton.setSelected(true);
+        
+        guard = false;
     }
     
     private Calendar getRepresentativeCalendar() {
@@ -162,6 +171,7 @@ public class AddEventDialog extends JDialog implements ActionListener, ItemListe
     public void reset() {
         nameField.setText("");
         setComboBoxes(Calendar.getInstance());
+        descriptionArea.setText("");
     }
     
     @Override
@@ -176,16 +186,21 @@ public class AddEventDialog extends JDialog implements ActionListener, ItemListe
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == yearField) {
-            try {
-                Integer.parseInt(yearField.getText());
-            } catch (NumberFormatException nfe) {
-                JOptionPane.showMessageDialog(this, "ERROR:  Year must be an integer value.", "Non-Numeric Year", JOptionPane.ERROR_MESSAGE);
-                yearField.setText(Calendar.getInstance().get(Calendar.YEAR) + "");
-                return;
+        if (!guard) {
+            if (e.getSource() == yearField) {
+                try {
+                    Integer.parseInt(yearField.getText());
+                } catch (NumberFormatException nfe) {
+                    JOptionPane.showMessageDialog(this, "ERROR:  Year must be an integer value.", "Non-Numeric Year", JOptionPane.ERROR_MESSAGE);
+                    yearField.setText(Calendar.getInstance().get(Calendar.YEAR) + "");
+                    return;
+                }
+            } else if (e.getActionCommand().equals("CREATE")) {
+                mW.getSchedule().addEvent(getEvent());
+                dispose();
             }
-        }
         
-        setComboBoxes(getRepresentativeCalendar());
+            setComboBoxes(getRepresentativeCalendar());
+        }
     }
 }

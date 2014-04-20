@@ -19,6 +19,7 @@ import net.claflan.CheDul.ui.views.WeekView;
 public class MainWindow extends JFrame implements ActionListener {
 
     private final EventHandler eH;
+    private Schedule loadedSchedule;
     
     private JMenuBar menuBar;    
     private JMenu fileMenu, optionsMenu, helpMenu;
@@ -63,7 +64,7 @@ public class MainWindow extends JFrame implements ActionListener {
         setJMenuBar(menuBar);
         
         //Add ToolBar
-        viewControl = new ViewControl(Calendar.getInstance(), this);
+        viewControl = new ViewControl(Calendar.getInstance(), this, eH);
         viewControl.setFloatable(false);
         
         weekView = new WeekView();
@@ -73,10 +74,16 @@ public class MainWindow extends JFrame implements ActionListener {
     }
     
     public void loadSchedule(Schedule schedule) {
+        loadedSchedule = schedule;
         weekView.setSchedule(schedule);
         JTable weekViewTable = weekView.getJTable();
         getContentPane().add(new JScrollPane(weekViewTable), BorderLayout.CENTER);
-        repaint();
+        viewControl.setControlsEnabled(true);
+        viewControl.validateCalendar();
+    }
+    
+    public Schedule getSchedule() {
+        return loadedSchedule;
     }
 
     @Override

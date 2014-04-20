@@ -4,18 +4,23 @@ import java.util.Calendar;
 
 public class DayView extends View {
 
+    public DayView() {
+        super(Calendar.DATE, 1);
+    }
+    
     @Override
-    public void previous() {
+    public int getRowCount() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void next() {
+    public int getColumnCount() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void goToDate(Calendar calendar) {
+    public Object getValueAt(int rowIndex, int columnIndex) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
 }

@@ -1,13 +1,16 @@
  package net.claflan.CheDul.ui.views;
  
 import java.awt.Component;
+import java.awt.Font;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.TableCellRenderer;
 import net.claflan.CheDul.constants.Day;
 import net.claflan.CheDul.logic.Event;
@@ -27,10 +30,22 @@ public class WeekView extends View {
                 
                 ArrayList<String> headerStrings = (ArrayList<String>) value;
                 JLabel dayLabel = new JLabel(headerStrings.get(0));
+                dayLabel.setFont(new Font("Dialog", Font.BOLD, 16));
+                dayLabel.setHorizontalTextPosition(SwingConstants.RIGHT);
+                dayLabel.setAlignmentX(Box.RIGHT_ALIGNMENT);
                 JLabel dateLabel = new JLabel(headerStrings.get(1));
+                dateLabel.setFont(new Font("Dialog", Font.PLAIN, 10));
+                dateLabel.setHorizontalTextPosition(SwingConstants.RIGHT);
+                dateLabel.setAlignmentX(Box.RIGHT_ALIGNMENT);
                 
                 headerPane.add(dateLabel);
                 headerPane.add(dayLabel);
+                
+                int oldHeight = (column == 0) ? 0 : table.getRowHeight(0);
+                int newHeight = headerPane.getPreferredSize().height;
+            
+                if (newHeight > oldHeight)
+                    table.setRowHeight(0, newHeight);
                 
                 return headerPane;
             }
@@ -47,6 +62,15 @@ public class WeekView extends View {
                     JLabel eventLabel = new JLabel(event.getName());
                     dataPane.add(eventLabel);
                 }
+                
+                int oldHeight = (column == 0) ? 0 : table.getRowHeight(1);
+                int firstRowHeight = table.getRowHeight(0);
+                int proposedHeight = dataPane.getPreferredSize().height;
+                int heightOfParent = table.getParent().getSize().height;
+            
+                int newHeight = (proposedHeight > heightOfParent) ? proposedHeight : heightOfParent - firstRowHeight;
+                if (newHeight > oldHeight)
+                    table.setRowHeight(1, newHeight);
                 
                 return dataPane;
             }
@@ -87,12 +111,5 @@ public class WeekView extends View {
         
             return events;
         }
-    }
-    
-    @Override
-    public JTable getJTable() {
-        JTable superTable = super.getJTable();
-        superTable.setRowHeight(0, 30);
-        return superTable;
     }
 }

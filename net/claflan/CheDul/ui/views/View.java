@@ -42,7 +42,7 @@ public abstract class View extends AbstractTableModel {
     }
     
     public JTable getJTable() {
-        return new JTable(this) {
+        JTable table = new JTable(this) {
             
             @Override
             public TableCellRenderer getCellRenderer(int row, int column) {
@@ -53,5 +53,10 @@ public abstract class View extends AbstractTableModel {
                 }
             }
         };
+        
+        table.setTableHeader(null);
+        table.setFillsViewportHeight(true);
+        
+        return table;
     }
 }

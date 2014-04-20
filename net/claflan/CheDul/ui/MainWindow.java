@@ -76,7 +76,6 @@ public class MainWindow extends JFrame implements ActionListener {
         weekView.setSchedule(schedule);
         JTable weekViewTable = weekView.getJTable();
         getContentPane().add(new JScrollPane(weekViewTable), BorderLayout.CENTER);
-        weekViewTable.setFillsViewportHeight(true);
         repaint();
     }
 

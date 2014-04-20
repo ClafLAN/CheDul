@@ -66,7 +66,7 @@ public class WeekView extends View {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Calendar dayOfColumn = (Calendar) targetedDate.clone();
-        dayOfColumn.add(Calendar.DATE, -dayOfColumn.get(Calendar.DAY_OF_WEEK) + columnIndex);
+        dayOfColumn.add(Calendar.DATE, -dayOfColumn.get(Calendar.DAY_OF_WEEK) + columnIndex + 1);
         
         if (rowIndex == 0) {
             ArrayList<String> headerStrings = new ArrayList();
@@ -87,5 +87,12 @@ public class WeekView extends View {
         
             return events;
         }
+    }
+    
+    @Override
+    public JTable getJTable() {
+        JTable superTable = super.getJTable();
+        superTable.setRowHeight(0, 30);
+        return superTable;
     }
 }

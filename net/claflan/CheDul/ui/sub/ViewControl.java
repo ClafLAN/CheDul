@@ -96,7 +96,7 @@ public class ViewControl extends JToolBar implements ActionListener {
     
     public Calendar getRepresentativeCalendar() {
         return new GregorianCalendar(Integer.parseInt(yearField.getText()), 
-                monthBox.getSelectedIndex() + 1, dateBox.getSelectedIndex() + 1);
+                monthBox.getSelectedIndex(), dateBox.getSelectedIndex() + 1);
     }
     
     public void validateCalendar() {

@@ -1,10 +1,12 @@
 package net.claflan.CheDul.ui;
 
+import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import net.claflan.CheDul.EventHandler;
+import net.claflan.CheDul.ui.sub.ViewControl;
 
 public class MainWindow extends JFrame {
 
@@ -13,6 +15,8 @@ public class MainWindow extends JFrame {
     private JMenuBar menuBar;    
     private JMenu fileMenu, optionsMenu, helpMenu;
     private JMenuItem file_newSchedule, file_openSchedule, file_exit;
+    
+    private ViewControl viewControl;
     
     public MainWindow(EventHandler eH) {
         super("CheDul");
@@ -25,6 +29,7 @@ public class MainWindow extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         
+        //  Create JMenu
         menuBar = new JMenuBar();
         
         fileMenu = new JMenu("File");
@@ -48,6 +53,8 @@ public class MainWindow extends JFrame {
         
         setJMenuBar(menuBar);
         
-        setVisible(true);
+        //Add ToolBar
+        viewControl = new ViewControl();
+        add(viewControl, BorderLayout.NORTH);
     }
 }

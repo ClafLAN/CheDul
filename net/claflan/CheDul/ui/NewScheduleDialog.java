@@ -38,7 +38,7 @@ public class NewScheduleDialog extends JDialog implements ActionListener {
         ownerLabel = new JLabel("Owner:");
         
         fileField = new JTextField(30);
-        fileField.setEnabled(false);
+        fileField.setFocusable(false);
         nameField = new JTextField(10);
         nameField.addActionListener(this);
         ownerField = new JTextField(10);

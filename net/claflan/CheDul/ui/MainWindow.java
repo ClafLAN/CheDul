@@ -1,6 +1,9 @@
 package net.claflan.CheDul.ui;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Calendar;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -8,7 +11,7 @@ import javax.swing.JMenuItem;
 import net.claflan.CheDul.EventHandler;
 import net.claflan.CheDul.ui.sub.ViewControl;
 
-public class MainWindow extends JFrame {
+public class MainWindow extends JFrame implements ActionListener {
 
     private final EventHandler eH;
     
@@ -54,7 +57,20 @@ public class MainWindow extends JFrame {
         setJMenuBar(menuBar);
         
         //Add ToolBar
-        viewControl = new ViewControl();
+        viewControl = new ViewControl(Calendar.getInstance(), this);
+        viewControl.setFloatable(false);
         add(viewControl, BorderLayout.NORTH);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        switch (e.getActionCommand()) {
+            case "MONTH":
+                break;
+            case "WEEK":
+                break;
+            case "DAY":
+                break;
+        }
     }
 }

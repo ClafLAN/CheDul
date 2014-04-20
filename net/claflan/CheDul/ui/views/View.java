@@ -1,18 +1,30 @@
 package net.claflan.CheDul.ui.views;
 
 import java.util.Calendar;
-import javax.swing.JPanel;
+import javax.swing.table.AbstractTableModel;
 
-public abstract class View extends JPanel {
+public abstract class View extends AbstractTableModel {
 
-    public View() {
-        this(Calendar.getInstance());
+    private Calendar targetedDate;
+    private final int incrementType;
+    private final int incrementValue;
+    
+    public View(int incrementType, int incrementValue) {
+        this(Calendar.getInstance(), incrementType, incrementValue);
     }
-    public View(Calendar calendar) {
+    public View(Calendar calendar, int incrementType, int incrementValue) {
+        this.incrementType = incrementType;
+        this.incrementValue = incrementValue;
         goToDate(calendar);
     }
     
-    public abstract void previous();
-    public abstract void next();
-    public abstract void goToDate(Calendar calendar);
+    public void previous() {
+        targetedDate.add(incrementType, -incrementValue);
+    }
+    public void next() {
+        targetedDate.add(incrementType, incrementValue);
+    }
+    public void goToDate(Calendar calendar){
+        targetedDate = calendar;
+    }
 }

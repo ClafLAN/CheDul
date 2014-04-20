@@ -9,13 +9,14 @@ import java.io.File;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import net.claflan.CheDul.logic.Schedule;
 
 public class NewScheduleDialog extends JDialog implements ActionListener {
         
+    private final MainWindow mW;
+    
     private File chosenFile;
     private JFileChooser fileChooser;
     
@@ -23,12 +24,13 @@ public class NewScheduleDialog extends JDialog implements ActionListener {
     private JTextField fileField, nameField, ownerField;
     private JButton fileButton, createButton;
 
-    public NewScheduleDialog(JFrame parent) {
-        super(parent, "Create New Schedule");
-        init(parent);
+    public NewScheduleDialog(MainWindow mW) {
+        super(mW, "Create New Schedule");
+        this.mW = mW;
+        init();
     }
     
-    private void init(JFrame parent) {
+    private void init() {
         setLayout(new GridBagLayout());
         setResizable(false);
         
@@ -47,6 +49,8 @@ public class NewScheduleDialog extends JDialog implements ActionListener {
         fileButton = new JButton("Browse");
         fileButton.addActionListener(this);
         createButton = new JButton("Create");
+        createButton.setActionCommand("LOAD");
+        createButton.addActionListener(this);
         createButton.setEnabled(false);
         
         Insets insets = new Insets(5, 5, 10, 5);
@@ -74,7 +78,7 @@ public class NewScheduleDialog extends JDialog implements ActionListener {
         
         setModalityType(ModalityType.APPLICATION_MODAL);
         pack();
-        setLocationRelativeTo(parent);
+        setLocationRelativeTo(mW);
     }
     
     public Schedule getSchedule() {
@@ -109,18 +113,11 @@ public class NewScheduleDialog extends JDialog implements ActionListener {
                 fileField.setText(chosenFile.getAbsolutePath());
             } else
                 fileField.setText("");
+        } else if (e.getActionCommand().equals("LOAD")) {
+            mW.loadSchedule(getSchedule());
+            dispose();
         }
         
         repaint();
-    }
-    
-    public static void main(String[] args) {
-        JFrame testFrame = new JFrame();
-        testFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        testFrame.setSize(500, 500);
-        testFrame.setLocationRelativeTo(null);
-        testFrame.setVisible(true);
-        NewScheduleDialog nsd = new NewScheduleDialog(testFrame);
-        nsd.setVisible(true);
     }
 }

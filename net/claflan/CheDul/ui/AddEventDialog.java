@@ -156,7 +156,7 @@ public class AddEventDialog extends JDialog implements ActionListener, ItemListe
     
     public Event getEvent() {
         return new Event(nameField.getText(), descriptionArea.getText(), 
-                getRepresentativeCalendar().getTime());
+                getRepresentativeCalendar());
     }
     
     public void reset() {

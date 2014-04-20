@@ -119,6 +119,10 @@ public class ViewControl extends JToolBar implements ActionListener {
         else
             dateBox.setSelectedIndex(0);
     }
+    
+    public void addView(View view) {
+        views.add(view);
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {

@@ -1,16 +1,16 @@
 package net.claflan.CheDul.logic;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.UUID;
 
 public class Event implements Serializable{
 
     private String name, description;
     private final UUID uuid;
-    private Date dueDate;
+    private Calendar dueDate;
     
-    public Event(String name, String description, Date dueDate) {
+    public Event(String name, String description, Calendar dueDate) {
         this.name = name;
         this.description = description;
         this.dueDate = dueDate;
@@ -31,10 +31,10 @@ public class Event implements Serializable{
         this.description = description;
     }
     
-    public Date getDueDate() {
+    public Calendar getDueDate() {
         return dueDate;
     }
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(Calendar dueDate) {
         this.dueDate = dueDate;
     }
     

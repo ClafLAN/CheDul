@@ -38,6 +38,7 @@ public abstract class View extends AbstractTableModel {
     }
     public final void goToDate(Calendar calendar){
         targetedDate = calendar;
+        fireTableDataChanged();
     }
     
     public JTable getJTable() {
